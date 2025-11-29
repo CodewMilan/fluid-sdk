@@ -23,6 +23,12 @@
     "@aptos-labs/ts-sdk": "^1.8.0",
     "@circle-fin/provider-cctp-v2": "^1.0.4",
     "@solana/web3.js": "1.87.6",
+    "@wormhole-foundation/sdk": "^4.0.2",
+    "@wormhole-foundation/sdk-aptos": "^4.0.2",
+    "@wormhole-foundation/sdk-aptos-cctp": "^4.0.2",
+    "@wormhole-foundation/sdk-evm": "^4.0.2",
+    "@wormhole-foundation/sdk-evm-cctp": "^4.0.2",
+    "axios": "^1.13.2",
     "dotenv": "^16.4.5",
     "ethers": "^6.9.0"
   },

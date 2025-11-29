@@ -8,7 +8,7 @@ async function main() {
 
   const result = await transferUsdcWithWormholeOnly({
     targetChain: 'Aptos',
-    transferAmount: '1.0', // Transfer 1 USDC
+    transferAmount: '0.5', // Transfer 1 USDC
     networkType: config.networkType,
   });
 
@@ -32,4 +32,6 @@ main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });
+
+
 

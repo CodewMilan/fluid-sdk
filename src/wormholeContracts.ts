@@ -49,9 +49,11 @@ export const USDC_ABI = [
 export const WORMHOLE_CHAIN_IDS = {
   // EVM chains
   ethereum: 2,
-  base: 30,
-  baseSepolia: 30, // Same as Base for testnet
+  base: 30, // Base mainnet
+  
   // Non-EVM chains
   aptos: 22,
 } as const;
+
+
 
