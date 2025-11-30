@@ -1,0 +1,46 @@
+# Source files (only dist is needed)
+src/
+*.ts
+!*.d.ts
+
+# Configuration files
+.env
+.env.local
+.env.*.local
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
+
+# Documentation (keep README only)
+*.md
+!README.md
+
+# Documentation folder
+docs/
+
+# Build artifacts
+*.tsbuildinfo
+node_modules/
+
+# Git
+.git/
+.gitignore
+
+# CI/CD
+.github/
+
+# Scripts
+scripts/
+
+# Temporary files
+*.log
+*.tmp
+

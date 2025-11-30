@@ -14,6 +14,7 @@ import { config } from "./config";
 import { getEvmSigner, getAptosSigner, toEvmSdkSigner, toAptosSdkSigner } from "./helper";
 import { TransferResult } from "./types";
 import { verifyPermit2Signature, createPermit, getPermit2Address, type Permit2Permit } from "./permit2";
+import { Config, createConfig } from "./config";
 
 // Base Sepolia USDC address (testnet)
 // TODO: Get this from SDK or make it configurable
@@ -29,6 +30,7 @@ export interface CctpTransferRequest {
   // If signature is a valid Permit2 signature, uses real Permit2 verification
   // Permit data should be encoded in signature or provided separately
   permitData?: Permit2Permit; // Optional: Permit2 permit data for verification
+  config?: Partial<Config>; // Optional: Override default config (uses env vars if not provided)
 }
 
 /**
@@ -128,7 +130,10 @@ export async function transferUsdcViaCctp(
   request: CctpTransferRequest
 ): Promise<TransferResult> {
   try {
-    const network: Network = config.networkType === "Mainnet" ? "Mainnet" : "Testnet";
+    // Use provided config or fall back to default (env-based) config
+    const transferConfig = request.config ? createConfig(request.config) : config;
+    
+    const network: Network = transferConfig.networkType === "Mainnet" ? "Mainnet" : "Testnet";
     
     console.log(`🔑 Initializing Wormhole SDK with ${network} network...`);
     
@@ -139,10 +144,10 @@ export async function transferUsdcViaCctp(
     const wh = await wormhole(network, [evm, aptos], {
       chains: {
         [srcChainName]: {
-          rpc: config.baseRpcUrl,
+          rpc: transferConfig.baseRpcUrl,
         },
         Aptos: {
-          rpc: config.aptosRpcUrl,
+          rpc: transferConfig.aptosRpcUrl,
         },
       },
     });
@@ -151,8 +156,8 @@ export async function transferUsdcViaCctp(
 
     // Get signers
     console.log(`🔑 Initializing signers...`);
-    const baseSigner = getEvmSigner(config.baseRpcUrl, config.baseSponsorPrivateKey);
-    const aptosSigner = await getAptosSigner(config.aptosRpcUrl, config.aptosSponsorPrivateKey);
+    const baseSigner = getEvmSigner(transferConfig.baseRpcUrl, transferConfig.baseSponsorPrivateKey);
+    const aptosSigner = await getAptosSigner(transferConfig.aptosRpcUrl, transferConfig.aptosSponsorPrivateKey);
     
     console.log(`✅ Base signer: ${baseSigner.address}`);
     console.log(`✅ Aptos signer: ${aptosSigner.address}`);
@@ -242,9 +247,55 @@ export async function transferUsdcViaCctp(
     // Step 1: Initiate transfer on Base Sepolia
     console.log(`📤 Initiating transfer on Base Sepolia...`);
     
-    // Refresh nonce to ensure we have the latest from network
-    const currentNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'pending');
-    console.log(`📊 Current wallet nonce: ${currentNonce}`);
+    // Check for pending transactions and wait for them to clear
+    const pendingNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'pending');
+    const latestNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'latest');
+    console.log(`📊 Latest confirmed nonce: ${latestNonce}, Pending nonce: ${pendingNonce}`);
+    
+    if (pendingNonce > latestNonce) {
+      const pendingCount = pendingNonce - latestNonce;
+      console.log(`⚠️  There ${pendingCount === 1 ? 'is' : 'are'} ${pendingCount} pending transaction(s) at nonce ${latestNonce + 1} and above. Waiting for them to clear...`);
+      console.log(`💡 Tip: If transactions are stuck, you may need to cancel them in your wallet or wait for them to expire.`);
+      
+      const maxWaitTime = 180000; // 3 minutes
+      const startTime = Date.now();
+      let lastPendingNonce = pendingNonce;
+      let lastLatestNonce = latestNonce;
+      
+      while ((Date.now() - startTime) < maxWaitTime) {
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+        
+        const newPendingNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'pending');
+        const newLatestNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'latest');
+        
+        if (newPendingNonce === newLatestNonce) {
+          console.log(`✅ Pending transactions cleared! Ready to send.`);
+          break;
+        }
+        
+        // Show progress if nonces changed
+        if (newPendingNonce !== lastPendingNonce || newLatestNonce !== lastLatestNonce) {
+          console.log(`⏳ Progress... Latest confirmed: ${newLatestNonce}, Pending: ${newPendingNonce}`);
+          lastPendingNonce = newPendingNonce;
+          lastLatestNonce = newLatestNonce;
+        } else {
+          console.log(`⏳ Still waiting... (${Math.floor((Date.now() - startTime) / 1000)}s elapsed)`);
+        }
+      }
+      
+      // Final check before proceeding
+      const finalPendingNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'pending');
+      const finalLatestNonce = await baseSigner.provider.getTransactionCount(baseSigner.address, 'latest');
+      
+      if (finalPendingNonce > finalLatestNonce) {
+        throw new Error(
+          `❌ Timeout: ${finalPendingNonce - finalLatestNonce} pending transaction(s) still not cleared after 3 minutes.\n` +
+          `   Latest confirmed nonce: ${finalLatestNonce}\n` +
+          `   Pending nonce: ${finalPendingNonce}\n` +
+          `   Please wait for pending transactions to confirm, or cancel them in your wallet before retrying.`
+        );
+      }
+    }
     
     // Wrap EVM signer into SDK Signer wrapper
     const baseSdkSigner = await toEvmSdkSigner(baseSigner.signer);

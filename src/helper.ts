@@ -3,7 +3,6 @@ import { EvmSignerResult, AptosSignerResult } from './types';
 import { getEvmSignerForSigner } from '@wormhole-foundation/sdk-evm';
 import { AptosSigner } from '@wormhole-foundation/sdk-aptos';
 import type { Signer, Network } from '@wormhole-foundation/sdk-connect';
-import type { EvmChains, AptosChains } from '@wormhole-foundation/sdk-definitions';
 
 /**
  * Creates an EVM signer (provider + signer) for Base chain
@@ -40,6 +39,7 @@ export async function getAptosSigner(rpcUrl: string, privateKey: string): Promis
   const { Aptos, Account, Ed25519PrivateKey } = aptos;
   
   // Create Aptos client instance
+  // @ts-ignore - Aptos constructor accepts fullnode URL string or config object
   const client = new Aptos({ fullnode: rpcUrl });
   
   // Handle different private key formats
@@ -106,7 +106,7 @@ export async function getAptosSigner(rpcUrl: string, privateKey: string): Promis
  */
 export async function toEvmSdkSigner<N extends Network>(
   wallet: ethers.Wallet
-): Promise<Signer<N, EvmChains>> {
+): Promise<Signer<N, any>> {
   // getEvmSignerForSigner only needs the signer, provider is attached to the wallet
   return await getEvmSignerForSigner(wallet);
 }
@@ -121,8 +121,8 @@ export async function toEvmSdkSigner<N extends Network>(
 export function toAptosSdkSigner<N extends Network>(
   aptosAccount: any, // Aptos Account type from @aptos-labs/ts-sdk
   aptosClient: any, // Aptos client type from @aptos-labs/ts-sdk
-  chainName: AptosChains
-): AptosSigner<N, AptosChains> {
+  chainName: "Aptos"
+): AptosSigner<N, "Aptos"> {
   return new AptosSigner(chainName, aptosAccount, aptosClient);
 }
 

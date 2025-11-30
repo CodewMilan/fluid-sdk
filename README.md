@@ -18,7 +18,19 @@ The service uses sponsor wallets to pay all gas fees, so users don't need to sig
 
 ## Architecture
 
-See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed system architecture, data flow diagrams, and component descriptions.
+See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for detailed system architecture, data flow diagrams, and component descriptions.
+
+## Documentation
+
+All documentation and guides are available in the [`docs/`](./docs/) folder:
+
+- **[SDK Documentation](./docs/SDK.md)** - Complete SDK API reference and usage examples
+- **[Architecture Guide](./docs/ARCHITECTURE.md)** - System architecture and design
+- **[NPM Package Setup](./docs/NPM_PACKAGE_SETUP.md)** - Publishing and distribution guide
+- **[Permit2 Implementation](./docs/PERMIT2_IMPLEMENTATION.md)** - Permit2 EIP-712 signature guide
+- **[User Wallet Flow](./docs/USER_WALLET_FLOW.md)** - User payment flow documentation
+- **[Run Transfer Guide](./docs/RUN_TRANSFER.md)** - Transfer execution instructions
+- **[Implementation Summary](./docs/IMPLEMENTATION_SUMMARY.md)** - Feature overview
 
 ## Quick Start
 

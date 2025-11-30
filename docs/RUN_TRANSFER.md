@@ -125,4 +125,9 @@ cd "c:\Users\MY PC\Documents\github\cctp"; npx tsx src/runCctp.ts --amount 0.2 -
 - **"Signature verification failed"** → Make sure permit data matches the signature
 - **"Insufficient USDC balance"** → Fund your wallet with testnet USDC
 - **"Network error"** → Check your RPC URLs in `.env` file
+- **"replacement fee too low"** or **"replacement transaction underpriced"** → This means there's a pending transaction with a higher gas price. The code will now automatically wait for pending transactions to clear (up to 3 minutes). If it still fails:
+  1. Check Base Sepolia explorer for pending transactions from your wallet
+  2. Wait for them to confirm (or wait ~15 minutes for them to expire)
+  3. Or cancel/replace them in your wallet with a higher gas price
+  4. Then retry the transfer
 

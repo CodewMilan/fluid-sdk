@@ -49,14 +49,26 @@ export interface Permit2Authorization {
 }
 
 /**
+ * Permit2 contract address (same on all EVM chains)
+ */
+export const PERMIT2_ADDRESS = "0x000000000022D473030F116dDEE9F6B43aC78BA3";
+
+/**
+ * Base Sepolia Chain ID
+ */
+export const BASE_SEPOLIA_CHAIN_ID = 84532;
+
+/**
+ * Base Sepolia USDC address (testnet)
+ */
+export const BASE_SEPOLIA_USDC = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
+
+/**
  * Get Permit2 contract address for a given chain
  * Permit2 is a universal token approval contract deployed at the same address on all EVM chains
  */
 export function getPermit2Address(): string {
-  // Permit2 is deployed at the same address on all EVM chains
-  // Mainnet address: 0x000000000022D473030F116dDEE9F6B43aC78BA3
-  // Testnet should use the same address if Permit2 is deployed there
-  return "0x000000000022D473030F116dDEE9F6B43aC78BA3";
+  return PERMIT2_ADDRESS;
 }
 
 /**
@@ -95,13 +107,13 @@ export function getPermit2Types() {
 
 /**
  * Generate Permit2 EIP-712 signature
- * @param signer - Ethers signer (user's wallet)
+ * @param signer - Ethers wallet (user's wallet)
  * @param permit - Permit details
  * @param chainId - Chain ID
  * @returns Hex-encoded signature string
  */
 export async function generatePermit2Signature(
-  signer: ethers.Signer,
+  signer: ethers.Wallet,
   permit: Permit2Permit,
   chainId: number
 ): Promise<string> {

@@ -1,11 +1,25 @@
 {
-  "name": "cctp-wormhole-transfer",
+  "name": "@fluid-sdk/fluid-sdk",
   "version": "1.0.0",
-  "description": "Cross-chain USDC transfer from Base to Aptos using Wormhole and Circle CCTP",
+  "description": "SDK for cross-chain USDC transfers from Base to Aptos using Wormhole and Circle CCTP",
   "type": "module",
-  "main": "dist/runCctp.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "start": "tsx src/runCctp.ts",
     "dev": "tsx src/runCctp.ts",
     "transfer": "tsx src/runCctp.ts"
@@ -16,10 +30,18 @@
     "cross-chain",
     "usdc",
     "base",
-    "aptos"
+    "aptos",
+    "circle",
+    "bridge",
+    "permit2",
+    "defi"
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.8.0",
     "@circle-fin/provider-cctp-v2": "^1.0.4",
