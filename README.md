@@ -1,5 +1,9 @@
 # Cross-Chain USDC Transfer: Base Sepolia → Aptos via Circle CCTP
 
+# Deployed Links
+- **npm package**: https://www.npmjs.com/package/@fluid-sdk/fluid-sdk
+- **docs**: https://fluid-aptos.vercel.app/
+
 A Node.js + TypeScript backend service for transferring USDC from **Base Sepolia (EVM)** to **Aptos (Move)** using **Circle CCTP (Cross-Chain Transfer Protocol)** via the **Wormhole SDK**. This is the same method that Portal Bridge uses and is the only method that works for Base Sepolia → Aptos transfers.
 
 ## Overview
