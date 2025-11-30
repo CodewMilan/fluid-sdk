@@ -1,0 +1,84 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./styles/habbo.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+.habbo_window__DfWR8 {
+  position: fixed;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background: #d9e6ef;
+  box-shadow: 0 4px 0 #00000040, 0 0 0 2px #3b5f76 inset;
+  overflow: hidden;
+}
+
+.habbo_titlebar__6DV_j {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  color: #0b2a3a;
+  border-bottom: 2px solid #000;
+  background: linear-gradient(180deg, #b6d5e9 0%, #6fa6c3 100%);
+}
+
+.habbo_title__POUMU {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px #e6f3fa;
+}
+
+.habbo_closeBtn__Xk7F0 {
+  border-radius: 9999px !important;
+  background: #dc2626 !important;
+  box-shadow: 0 0 0 2px #000 inset;
+  position: relative;
+}
+.habbo_closeBtn__Xk7F0:hover { filter: brightness(0.95); }
+.habbo_closeBtn__Xk7F0:active { transform: translateY(1px); }
+.habbo_closeIcon___8DGg { width: 12px; height: 12px; position: relative; display: block; }
+.habbo_closeIcon___8DGg::before, .habbo_closeIcon___8DGg::after {
+  content: ""; position: absolute; left: 5px; top: 1px; width: 2px; height: 10px; background: #000;
+}
+.habbo_closeIcon___8DGg::before { transform: rotate(45deg); } .habbo_closeIcon___8DGg::after { transform: rotate(-45deg); }
+
+.habbo_windowInner__pyOpA { height: calc(100% - 40px); background: #eef6fb; border-top: 2px solid #3b5f76; }
+.habbo_windowBody__VEzTC { display: flex; flex-direction: column; height: 100%; background: #eef6fb; }
+
+.habbo_logoBlock__VoD6P {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 28px; padding: 0 10px; border: 2px solid #000; border-radius: 6px;
+  background: linear-gradient(#ffcc00, #f3b700); box-shadow: 0 2px 0 #00000040;
+}
+.habbo_logoWord__PqRin { font-weight: 900; letter-spacing: 0.5px; color: #000; text-shadow: 1px 1px #ffe680; font-size: 13px; }
+
+.habbo_playFrame__KXNho { border: 2px solid #000; border-radius: 10px; background: #c6d9e6; box-shadow: 0 4px 0 #00000040, inset 0 0 0 2px #3b5f76; overflow: hidden; }
+
+.habbo_pixelButton___vMeS {
+  border: 2px solid #000 !important;
+  background: linear-gradient(#ffcf4d, #f59e0b) !important;
+  color: #1f1300 !important;
+  box-shadow: 0 2px 0 #00000040, inset 0 0 0 2px #a67c00 !important;
+}
+.habbo_pixelButton___vMeS:disabled { opacity: 0.6; }
+
+.habbo_pixelInput__Tyq5P { border: 2px solid #000 !important; box-shadow: inset 0 0 0 2px #6fa6c3 !important; background: #fff !important; }
+
+.habbo_tabBar__kc4Vh { display: flex; gap: 2px; padding: 6px 6px 0 6px; border-bottom: 2px solid #3b5f76; background: linear-gradient(180deg, #b6d5e9 0%, #6fa6c3 100%); }
+.habbo_tab__G5tse, .habbo_tabActive__SYcJf {
+  padding: 6px 10px; border: 2px solid #000; border-bottom-width: 0; border-top-left-radius: 8px; border-top-right-radius: 8px;
+  background: #9ec3d8; font-size: 12px; font-weight: 700;
+}
+.habbo_tabActive__SYcJf { background: #eef6fb; }
+
+.habbo_navRow__H2hFE {
+  display: flex; align-items: center; gap: 8px; padding: 6px 8px; border: 2px solid #000; border-radius: 8px;
+  background: linear-gradient(#d7f5dd, #b6eec3); box-shadow: inset 0 0 0 2px #3aa86b;
+}
+.habbo_navDot__kvf5x { width: 10px; height: 10px; background: #16a34a; border: 2px solid #000; border-radius: 9999px; }
+.habbo_statusPill___llni { font-size: 11px; padding: 2px 8px; border: 2px solid #000; border-radius: 9999px; background: #22c55e; color: #072f14; }
+.habbo_goButton__WvHXW {
+  border: 2px solid #000 !important; background: linear-gradient(#ffb84d, #f97316) !important; color: #1f1300 !important;
+  padding: 0 10px !important; height: 28px !important; box-shadow: inset 0 0 0 2px #a04f06 !important;
+}
+
